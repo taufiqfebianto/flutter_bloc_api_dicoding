@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_api_dicoding/pages/app.dart';
 import 'package:flutter_bloc_api_dicoding/shared/shared.dart';
 
 import '../pages/login/bloc/login.dart';
@@ -10,10 +9,11 @@ import '../pages/story/bloc/story.dart';
 import '../pages/story/detail_story/bloc/detail_story.dart';
 
 class Routers {
+  
   static const String register = '/register';
   static const String login = '/login';
   static const String addtory = '/addStory';
-  static const String allStory = '/';
+  static const String allStory = '/allStory';
   static const String detailStory = '/detailStory';
 
   final route = <String, WidgetBuilder>{
@@ -50,15 +50,15 @@ class Routers {
             }
 
             // return const SplashPage();
-            return const App();
+            return  Container();
           });
     },
-    // Routers.transferConfirmation: (BuildContext context) {
-    //   return BlocProvider<TransferConfimrationBloc>(
-    //     create: (BuildContext context) => TransferConfimrationBloc(),
-    //     child: const TransferConfirmationPage(),
-    //   );
-    // },
+    Routers.register: (BuildContext context) {
+      return BlocProvider<RegisterBloc>(
+        create: (BuildContext context) => RegisterBloc(),
+        child: const RegisterPage(),
+      );
+    },
     // Routers.receiptTransfer: (BuildContext context) {
     //   return BlocProvider<ReceiptTransferBloc>(
     //     create: (BuildContext context) => ReceiptTransferBloc(),

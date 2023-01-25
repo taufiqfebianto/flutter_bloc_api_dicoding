@@ -6,3 +6,13 @@ abstract class LoginEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class UserLoginEvent extends LoginEvent{
+  @override
+  List<Object> get props => [];
+
+  @override
+  String toString() {
+    return 'UserLoginEvent : ';
+  }
+}
