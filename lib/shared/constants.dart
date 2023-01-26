@@ -6,6 +6,6 @@ class Constants {
   static const String register = '/register';
   static const String login = '/login';
   static const String addStory = '/addStory';
-  static const String allStory = '/allStory';
+  static const String allStory = '/stories';
   static const String detailStory = '/detailStory';
 }

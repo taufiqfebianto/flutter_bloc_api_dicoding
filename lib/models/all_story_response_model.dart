@@ -37,22 +37,22 @@ class AllStoryResponseModel {
 
 class ListStory {
   ListStory({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.photoUrl,
-    required this.createdAt,
-    required this.lat,
-    required this.lon,
+     this.id,
+     this.name,
+     this.description,
+     this.photoUrl,
+     this.createdAt,
+    //  this.lat,
+    //  this.lon,
   });
 
-  String id;
-  String name;
-  String description;
-  String photoUrl;
-  DateTime createdAt;
-  double lat;
-  double lon;
+  String? id;
+  String? name;
+  String? description;
+  String? photoUrl;
+  DateTime? createdAt;
+  // String? lat;
+  // String? lon;
 
   factory ListStory.fromRawJson(String str) =>
       ListStory.fromJson(json.decode(str));
@@ -65,8 +65,8 @@ class ListStory {
         description: json["description"],
         photoUrl: json["photoUrl"],
         createdAt: DateTime.parse(json["createdAt"]),
-        lat: json["lat"]?.toDouble(),
-        lon: json["lon"]?.toDouble(),
+        // lat: json["lat"],
+        // lon: json["lon"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -74,8 +74,8 @@ class ListStory {
         "name": name,
         "description": description,
         "photoUrl": photoUrl,
-        "createdAt": createdAt.toIso8601String(),
-        "lat": lat,
-        "lon": lon,
+        "createdAt": createdAt,
+        // "lat": lat,
+        // "lon": lon,
       };
 }

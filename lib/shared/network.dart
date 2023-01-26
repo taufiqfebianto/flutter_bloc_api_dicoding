@@ -16,8 +16,8 @@ class Network {
       receiveTimeout: 5000,
       headers: {
         // 'Content-Type': 'application/json',
-        'Basic':
-            'NmFhNjE2MGQtMjcyMC00MDgwLTg2NzMtNWRiYmQ0ODJkNGZlOjJjNjhtNjZiOWo5N2IyZmZwdHZ4ZWJqeTl2b3Y1ZjhsaGdrOTNnNWpoZ2txeDRpNTg1MjRvM2o3MTNjaXQzeHo='
+        // 'Basic':
+        //     'NmFhNjE2MGQtMjcyMC00MDgwLTg2NzMtNWRiYmQ0ODJkNGZlOjJjNjhtNjZiOWo5N2IyZmZwdHZ4ZWJqeTl2b3Y1ZjhsaGdrOTNnNWpoZ2txeDRpNTg1MjRvM2o3MTNjaXQzeHo='
       },
     ),
   );
@@ -48,11 +48,11 @@ class Network {
       'Accept': contentType,
     };
 
-    String sessionId = await storage.getString(
-        boxName: describeEnum(StorageConstants.user), key: 'sessionId');
-    if (sessionId != '') {
-      headers['_sessionId'] = sessionId;
-    }
+    // String sessionId = await storage.getString(
+    //     boxName: describeEnum(StorageConstants.user), key: 'sessionId');
+    // if (sessionId != '') {
+    //   headers['_sessionId'] = sessionId;
+    // }
 
     _dio.options.headers = headers;
     try {
@@ -79,10 +79,10 @@ class Network {
       'Accept': contentType,
     };
 
-    String sessionId = await storage.getString(
-        boxName: describeEnum(StorageConstants.user), key: 'sessionId');
-    if (sessionId != '') {
-      headers['_sessionId'] = sessionId;
+    String token = await storage.getString(
+        boxName: describeEnum(StorageConstants.user), key: 'token');
+    if (token != '') {
+      headers['Authorization'] = 'Bearer $token';
     }
 
     _dio.options.headers = headers;

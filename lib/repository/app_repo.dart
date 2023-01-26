@@ -1,15 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-
 import '../models/models.dart';
 import '../shared/shared.dart';
 
 class AppRepo {
   Future<LoginResponseModel> register(
-      {required String username, required String password}) async {
+      {required String name,
+      required String email,
+      required String password}) async {
     try {
       final Map<String, dynamic> parameters = {
-        'username': username,
+        'name': name,
+        'email': email,
         'password': password,
       };
 
@@ -25,10 +26,10 @@ class AppRepo {
   }
 
   Future<LoginResponseModel> login(
-      {required String username, required String password}) async {
+      {required String email, required String password}) async {
     try {
       final Map<String, dynamic> parameters = {
-        'username': username,
+        'email': email,
         'password': password,
       };
 
@@ -44,16 +45,16 @@ class AppRepo {
   }
 
   Future<AllStoryResponseModel> allStory() async {
-    String id = await storage.getString(
-        boxName: describeEnum(StorageConstants.user), key: 'accountId');
+    // String id = await storage.getString(
+    //     boxName: describeEnum(StorageConstants.user), key: 'accountId');
     try {
-      final Map<String, dynamic> parameters = {
-        'id': id,
-      };
+      // final Map<String, dynamic> parameters = {
+      //   'id': id,
+      // };
 
       Map<String, dynamic> data = await network.getHttp(
           path: Constants.allStory,
-          parameter: parameters,
+          // parameter: parameters,
           contentType: 'application/json');
       return AllStoryResponseModel.fromJson(data);
     } on DioError catch (e) {

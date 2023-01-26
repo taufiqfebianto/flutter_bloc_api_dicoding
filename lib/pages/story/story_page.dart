@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_api_dicoding/models/models.dart';
+import 'package:flutter_bloc_api_dicoding/shared/shared.dart';
 
 import 'bloc/story.dart';
 
@@ -12,11 +14,15 @@ class StoryPage extends StatefulWidget {
 
 class _StoryPageState extends State<StoryPage> {
   StoryBloc? bloc;
+  AuthenticationBloc? authBloc;
+  AllStoryResponseModel? model;
 
   @override
   void initState() {
     super.initState();
     bloc = BlocProvider.of<StoryBloc>(context);
+    authBloc = BlocProvider.of<AuthenticationBloc>(context);
+    bloc!.add(GetAllStoryEvent());
   }
 
   @override
@@ -26,19 +32,25 @@ class _StoryPageState extends State<StoryPage> {
 
   _onAddStory() {}
 
-  _onClose() {}
+  _onClose() {
+    authBloc!.add(LoggedOut());
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<StoryBloc, StoryState>(
-      listener: ((context, state) {}),
+      listener: ((context, state) {
+        if (state is GetAllStorySuccessState) {
+          model = state.model;
+        }
+      }),
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
             leading: Container(),
-            title: Text(
+            title: const Text(
               'Story API dicoding',
               style:
                   TextStyle(color: Colors.black38, fontWeight: FontWeight.bold),
@@ -56,7 +68,7 @@ class _StoryPageState extends State<StoryPage> {
           body: Padding(
               padding: const EdgeInsets.symmetric(vertical: 25),
               child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: model?.listStory.length,
                   itemBuilder: ((context, index) {
                     return Container(
                       height: 300,
@@ -64,26 +76,25 @@ class _StoryPageState extends State<StoryPage> {
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.black12,
                       ),
-                      margin: EdgeInsets.all(15),
-                      padding: EdgeInsets.all(15),
+                      margin: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 225,
                             child: ClipRect(
-                              
                               child: Image.network(
-                                'https://petlog-media-cdn-live.azureedge.net/cache/e/7/c/3/f/5/e7c3f52d0124d14996a2e3b4bb99b9dbff4d237c.jpg',
+                                model!.listStory[index].photoUrl!,
                                 fit: BoxFit.fill,
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
+                            children: const [
                               Icon(Icons.thumb_up_alt_rounded),
                               SizedBox(
                                 width: 5,
@@ -102,7 +113,7 @@ class _StoryPageState extends State<StoryPage> {
           floatingActionButton: FloatingActionButton(
             onPressed: _onAddStory,
             backgroundColor: Colors.grey,
-            child: Icon(
+            child: const Icon(
               Icons.add_a_photo_rounded,
               color: Colors.white,
             ),

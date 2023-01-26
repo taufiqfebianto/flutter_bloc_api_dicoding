@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../shared/shared.dart';
 import 'bloc/register.dart';
@@ -22,6 +23,9 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     super.initState();
     bloc = BlocProvider.of<RegisterBloc>(context);
+    _nameController.text = 'name';
+    _emailController.text = 'email002@email.com';
+    _passwordController.text = 'Password01';
   }
 
   @override
@@ -33,12 +37,35 @@ class _RegisterPageState extends State<RegisterPage> {
     Navigator.of(context).popUntil(ModalRoute.withName(Routers.allStory));
   }
 
-  _onRegister() {}
+  _onRegister() {
+    // bloc!.add(RegisterAccountEvent(
+    //     _nameController.text, _emailController.text, _passwordController.text));
+    Fluttertoast.showToast(
+        msg: ' state.regStatus',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        // timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterBloc, RegisterState>(
-      listener: ((context, state) {}),
+      listener: ((context, state) {
+        if (state is RegisterAccountSuccessState) {
+          // Navigator.of(context).pushNamed(Routers.login);
+          Fluttertoast.showToast(
+              msg: state.regStatus,
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+      }),
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(

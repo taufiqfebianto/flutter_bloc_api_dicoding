@@ -21,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    _emailController.text = 'email002@email.com';
+    _passwordController.text = 'Password01';
     bloc = BlocProvider.of<LoginBloc>(context);
     authBloc = BlocProvider.of<AuthenticationBloc>(context);
   }
@@ -31,8 +33,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onLogin() {
-    authBloc!.add(LoggedIn());
+    // authBloc!.add(LoggedIn());
     // Navigator.of(context).pushNamed(Routers.allStory);
+    bloc!.add(UserLoginEvent(_emailController.text, _passwordController.text));
   }
 
   _onRegister() {
@@ -42,7 +45,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginState>(
-      listener: ((context, state) {}),
+      listener: ((context, state) {
+        if (state is UserLoginSuccessState) {
+          authBloc!.add(LoggedIn());
+          Navigator.of(context).pushNamed(Routers.allStory);
+        }
+      }),
       builder: (context, state) {
         return Scaffold(
           body: Padding(
@@ -103,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 TextButton(
                   onPressed: _onRegister,
-                  style: TextButton.styleFrom(primary: Colors.black12),
+                  style: TextButton.styleFrom(foregroundColor: Colors.black12),
                   child: const Text(
                     'dont have account, register here',
                     style: TextStyle(color: Colors.grey),
